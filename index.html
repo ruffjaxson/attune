@@ -27,13 +27,9 @@
       --font-display: "Fraunces", Georgia, serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -52,14 +48,16 @@
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    a:hover { text-decoration: underline; }
 
     .shell {
-      width: min(560px, calc(100% - 2rem));
+      width: min(1040px, calc(100% - 3rem));
       margin: 0 auto;
-      padding: 2.5rem 0 4rem;
+      padding: 1.75rem 0 2rem;
+    }
+
+    body.view-about .shell {
+      width: min(820px, calc(100% - 3rem));
     }
 
     header.app-header {
@@ -67,27 +65,26 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 2.75rem;
+      margin-bottom: 1.5rem;
     }
 
     .brand {
       display: flex;
       flex-direction: column;
-      gap: 0.15rem;
+      gap: 0.1rem;
     }
 
     .brand h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 1.85rem;
+      font-size: 1.7rem;
       font-weight: 600;
       letter-spacing: -0.02em;
-      color: var(--text);
     }
 
     .brand p {
       margin: 0;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
     }
 
@@ -123,14 +120,8 @@
       color: var(--text);
     }
 
-    .view {
-      display: none;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .view.active {
-      display: block;
-    }
+    .view { display: none; animation: fadeIn 0.25s ease; }
+    .view.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(4px); }
@@ -141,8 +132,16 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.25rem 1.35rem;
       box-shadow: var(--shadow);
+    }
+
+    /* Listen: two-column desktop layout */
+    .listen-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
     }
 
     .status {
@@ -150,29 +149,28 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 1rem;
       border-bottom: 1px solid var(--border);
     }
 
     .status-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-faint);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .status-value {
       font-size: 1.05rem;
       font-weight: 500;
-      color: var(--text);
     }
 
     .status-meta {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
     }
 
     .pulse-dot {
@@ -196,17 +194,17 @@
     }
 
     .section-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-faint);
-      margin: 0 0 0.75rem;
+      margin: 0 0 0.55rem;
     }
 
     .presets {
       display: grid;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
     }
 
     .preset {
@@ -217,12 +215,12 @@
       background: var(--bg);
       color: var(--text);
       font: inherit;
-      padding: 0.95rem 1.1rem;
-      border-radius: 12px;
+      padding: 0.75rem 0.85rem;
+      border-radius: 11px;
       cursor: pointer;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 0.25rem 1rem;
+      gap: 0.15rem 0.6rem;
       transition: border-color 0.15s ease, background 0.15s ease;
     }
 
@@ -238,11 +236,11 @@
 
     .preset-name {
       font-weight: 500;
-      font-size: 0.98rem;
+      font-size: 0.92rem;
     }
 
     .preset-hz {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--accent-hover);
       font-variant-numeric: tabular-nums;
       align-self: center;
@@ -250,15 +248,15 @@
 
     .preset-desc {
       grid-column: 1 / -1;
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
     }
 
     .modes {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
+      gap: 0.45rem;
+      margin-bottom: 0.4rem;
     }
 
     .mode {
@@ -267,9 +265,9 @@
       background: var(--bg);
       color: var(--text-muted);
       font: inherit;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      padding: 0.7rem 0.5rem;
+      padding: 0.65rem 0.4rem;
       border-radius: 10px;
       cursor: pointer;
       transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
@@ -287,31 +285,31 @@
     }
 
     .mode-hint {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin: 0 0 1.5rem;
-      min-height: 2.4em;
+      margin: 0 0 1.1rem;
+      min-height: 2.6em;
     }
 
     .controls {
       display: grid;
-      gap: 1rem;
+      gap: 0.85rem;
     }
 
     .volume-row {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.7rem;
     }
 
     .volume-row label {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      min-width: 3.2rem;
+      min-width: 3.6rem;
     }
 
     .volume-row output {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-faint);
       font-variant-numeric: tabular-nums;
       min-width: 2.5rem;
@@ -329,8 +327,8 @@
 
     input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: var(--accent);
       border: none;
@@ -338,8 +336,8 @@
     }
 
     input[type="range"]::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: var(--accent);
       border: none;
@@ -353,9 +351,9 @@
       background: transparent;
       color: var(--text-muted);
       font: inherit;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
-      padding: 0.85rem;
+      padding: 0.75rem;
       border-radius: 10px;
       cursor: pointer;
       transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
@@ -375,24 +373,23 @@
     /* How it works */
     .article h2 {
       font-family: var(--font-display);
-      font-size: 1.55rem;
+      font-size: 1.7rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin: 0 0 0.75rem;
     }
 
     .article .lede {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       color: var(--text-muted);
       margin: 0 0 2rem;
+      max-width: 42rem;
     }
 
-    .article section {
-      margin-bottom: 2rem;
-    }
+    .article section { margin-bottom: 2rem; }
 
     .article h3 {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 600;
       margin: 0 0 0.6rem;
     }
@@ -400,33 +397,29 @@
     .article p,
     .article li {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.98rem;
     }
 
-    .article p {
-      margin: 0 0 0.85rem;
-    }
+    .article p { margin: 0 0 0.85rem; }
 
     .article ul {
       margin: 0 0 0.85rem;
       padding-left: 1.15rem;
     }
 
-    .article li {
-      margin-bottom: 0.4rem;
-    }
+    .article li { margin-bottom: 0.4rem; }
 
     .bands {
       display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 0.55rem;
       margin: 1rem 0;
     }
 
     .band {
       display: grid;
-      grid-template-columns: 5.5rem 1fr;
-      gap: 0.75rem;
-      padding: 0.75rem 0.9rem;
+      gap: 0.15rem;
+      padding: 0.8rem 0.95rem;
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -439,9 +432,7 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .band span {
-      color: var(--text-muted);
-    }
+    .band span { color: var(--text-muted); }
 
     .callout {
       padding: 1rem 1.1rem;
@@ -454,43 +445,41 @@
     .callout p {
       margin: 0;
       color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
 
-    .refs {
-      font-size: 0.82rem !important;
-    }
-
-    .refs a {
-      word-break: break-word;
-    }
+    .refs { font-size: 0.84rem !important; }
 
     footer.site-footer {
-      margin-top: 2rem;
+      margin-top: 1.25rem;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-faint);
     }
 
-    @media (max-width: 520px) {
-      .shell {
-        width: min(100%, calc(100% - 1.25rem));
-        padding-top: 1.5rem;
+    @media (max-width: 820px) {
+      .shell,
+      body.view-about .shell {
+        width: min(100%, calc(100% - 1.5rem));
       }
 
+      .listen-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .presets,
+      .bands {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
       header.app-header {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .modes {
-        grid-template-columns: 1fr;
-      }
-
-      .band {
-        grid-template-columns: 1fr;
-        gap: 0.2rem;
-      }
+      .modes { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -510,29 +499,40 @@
     <main>
       <div id="view-listen" class="view active" role="tabpanel" aria-labelledby="tab-listen">
         <div class="panel">
-          <div class="status">
+          <div class="listen-layout">
             <div>
-              <div class="status-label">Now playing</div>
-              <div class="status-value" id="status-value">Idle</div>
-              <div class="status-meta" id="status-meta">Choose a tone to begin</div>
+              <p class="section-label">Tone</p>
+              <div class="presets" id="presets" role="group" aria-label="Frequency presets"></div>
             </div>
-            <div class="pulse-dot" id="pulse-dot" aria-hidden="true"></div>
-          </div>
 
-          <p class="section-label">Tone</p>
-          <div class="presets" id="presets" role="group" aria-label="Frequency presets"></div>
+            <div>
+              <div class="status">
+                <div>
+                  <div class="status-label">Now playing</div>
+                  <div class="status-value" id="status-value">Idle</div>
+                  <div class="status-meta" id="status-meta">Choose a tone to begin</div>
+                </div>
+                <div class="pulse-dot" id="pulse-dot" aria-hidden="true"></div>
+              </div>
 
-          <p class="section-label">Playback</p>
-          <div class="modes" id="modes" role="group" aria-label="Playback modes"></div>
-          <p class="mode-hint" id="mode-hint"></p>
+              <p class="section-label">Playback</p>
+              <div class="modes" id="modes" role="group" aria-label="Playback modes"></div>
+              <p class="mode-hint" id="mode-hint"></p>
 
-          <div class="controls">
-            <div class="volume-row">
-              <label for="volume">Volume</label>
-              <input type="range" id="volume" min="0" max="100" value="25" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
-              <output id="volume-out" for="volume">25%</output>
+              <div class="controls">
+                <div class="volume-row">
+                  <label for="volume">Volume</label>
+                  <input type="range" id="volume" min="0" max="100" value="22" aria-valuemin="0" aria-valuemax="100" aria-valuenow="22">
+                  <output id="volume-out" for="volume">22%</output>
+                </div>
+                <div class="volume-row">
+                  <label for="softness">Softness</label>
+                  <input type="range" id="softness" min="0" max="100" value="65" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65">
+                  <output id="softness-out" for="softness">65%</output>
+                </div>
+                <button type="button" class="btn-stop" id="btn-stop" disabled>Stop</button>
+              </div>
             </div>
-            <button type="button" class="btn-stop" id="btn-stop" disabled>Stop</button>
           </div>
         </div>
       </div>
@@ -541,36 +541,51 @@
         <article class="article panel">
           <h2>How it works</h2>
           <p class="lede">
-            Attune plays carefully tuned tones so your ears — and, with headphones, your brain —
-            hear a slow pulse at a chosen frequency. That pulse is the “beat.”
+            Attune plays carefully tuned tones so you hear a slow pulse at a chosen frequency.
+            That pulse is the “beat.” There is more than one way to deliver the same beat rate.
           </p>
 
           <section>
-            <h3>Two tones, one perceived beat</h3>
+            <h3>Do focus tones require binaural?</h3>
             <p>
-              In <strong>binaural</strong> mode, each ear gets a slightly different pure tone —
-              for example 200&nbsp;Hz on the left and 210&nbsp;Hz on the right. You never hear a
-              10&nbsp;Hz sound from the speakers; instead, brainstem circuits that compare the two
-              ears produce a 10&nbsp;Hz difference signal. That only works with stereo headphones
-              (or earbuds), because each ear must receive its own channel.
+              <strong>No — but binaural is the classic method.</strong> “Binaural beats” specifically
+              means two slightly different pure tones, one in each ear. Your brainstem perceives the
+              difference (for example 200&nbsp;Hz left + 210&nbsp;Hz right → a 10&nbsp;Hz beat). That
+              only works with stereo headphones.
             </p>
             <p>
-              <strong>Isochronic</strong> mode is different: a single tone is turned on and off
-              (or pulsed in volume) at the target rate. The beat is in the sound itself, so it
-              works over speakers. <strong>Ambient</strong> mode keeps the binaural pair and
-              adds a soft noise bed so the tones feel less stark.
+              The same <em>target rate</em> (10&nbsp;Hz, 15&nbsp;Hz, 40&nbsp;Hz, …) can also be
+              delivered other ways:
             </p>
+            <ul>
+              <li>
+                <strong>Binaural</strong> — classic left/right frequency offset. Headphones required.
+              </li>
+              <li>
+                <strong>Ambient</strong> — the same binaural pair, plus a soft noise bed so the tones
+                feel less stark. Still headphones.
+              </li>
+              <li>
+                <strong>Isochronic</strong> — a single tone pulsed on/off at the target rate. The beat
+                is in the sound itself, so speakers work. It is <em>not</em> binaural; it is a
+                different technique aimed at the same Hz.
+              </li>
+            </ul>
             <div class="callout">
-              <p>Use headphones for binaural and ambient. Isochronic is fine on speakers.</p>
+              <p>
+                If you want classic binaural beats, use <strong>Binaural</strong> or
+                <strong>Ambient</strong> with headphones. Use Isochronic when you prefer a pulsed
+                tone or don’t have headphones.
+              </p>
             </div>
           </section>
 
           <section>
             <h3>Brainwave bands (rough map)</h3>
             <p>
-              EEG research groups cortical rhythms into bands. Attune’s presets sit in the ranges
-              people often associate with calm focus or alert thinking — not as medical claims,
-              but as a practical map for choosing a tone.
+              EEG research groups cortical rhythms into bands. Attune’s presets sit in ranges people
+              often associate with calm focus or alert thinking — a practical map for choosing a
+              feel, not a medical claim.
             </p>
             <div class="bands">
               <div class="band"><strong>~1–4 Hz</strong><span>Delta — deep sleep (not offered here)</span></div>
@@ -584,27 +599,27 @@
           <section>
             <h3>What studies actually show</h3>
             <p>
-              The idea that listening to a beat “entrains” your brain to that frequency is
-              popular, but the evidence is mixed and often modest.
+              The idea that listening to a beat “entrains” your brain to that frequency is popular,
+              but the evidence is mixed and often modest.
             </p>
             <ul>
               <li>
-                EEG work has sometimes found that binaural beats can modulate oscillatory power
-                or connectivity, especially in alpha/beta ranges — but results vary by protocol,
-                carrier frequency, and listener.
+                EEG work has sometimes found that binaural beats can modulate oscillatory power or
+                connectivity, especially in alpha/beta ranges — results vary by protocol, carrier,
+                and listener.
               </li>
               <li>
                 Behavioral studies on attention, anxiety, and memory report small or inconsistent
-                effects. Meta-analyses tend to urge caution: many trials are small, and placebo
-                or expectation effects are hard to rule out.
+                effects. Meta-analyses urge caution: many trials are small, and expectation effects
+                are hard to rule out.
               </li>
               <li>
                 Isochronic tones and rhythmic stimulation more generally can affect subjective
-                arousal and attention; again, effects are not guaranteed for every person.
+                arousal and attention; effects are not guaranteed for every person.
               </li>
               <li>
-                40&nbsp;Hz stimulation has drawn interest in Alzheimer’s research (often using
-                light and sound together in lab settings). Consumer audio alone is not a treatment.
+                40&nbsp;Hz stimulation has drawn interest in Alzheimer’s research (often light and
+                sound together in labs). Consumer audio alone is not a treatment.
               </li>
             </ul>
             <p>
@@ -617,9 +632,10 @@
           <section>
             <h3>Why Attune softens the sound</h3>
             <p>
-              Raw sine waves can feel harsh. Attune fades tones in and out, gently low-passes
-              the carriers, and (in ambient mode) layers quiet noise so the beat sits in a
-              softer texture. Volume defaults low — start quiet and raise only as needed.
+              Raw sine waves can feel harsh and “electronic.” Attune uses a lower carrier tone,
+              fades in/out, low-passes the signal, and (via the Softness control) blends in a quiet
+              pink-noise bed so the beat sits in a mufflier texture. Turn Softness up for a more
+              padded sound; turn it down for a cleaner, more clinical tone.
             </p>
           </section>
 
@@ -647,87 +663,96 @@
 
   <script>
     const PRESETS = [
-      {
-        id: "alpha-calm",
-        name: "Easy focus",
-        beat: 10,
-        desc: "Alpha · relaxed attention",
-      },
-      {
-        id: "alpha-study",
-        name: "Steady study",
-        beat: 12,
-        desc: "Upper alpha · reading and light work",
-      },
-      {
-        id: "beta-think",
-        name: "Clear thinking",
-        beat: 15,
-        desc: "Low beta · analytical work",
-      },
-      {
-        id: "beta-alert",
-        name: "Alert",
-        beat: 20,
-        desc: "Mid beta · active problem-solving",
-      },
-      {
-        id: "gamma",
-        name: "Deep concentration",
-        beat: 40,
-        desc: "Gamma · intense focus sessions",
-      },
+      { id: "alpha-calm", name: "Easy focus", beat: 10, desc: "Alpha · relaxed attention" },
+      { id: "alpha-study", name: "Steady study", beat: 12, desc: "Upper alpha · reading" },
+      { id: "beta-think", name: "Clear thinking", beat: 15, desc: "Low beta · analytical" },
+      { id: "beta-alert", name: "Alert", beat: 20, desc: "Mid beta · problem-solving" },
+      { id: "gamma", name: "Deep concentration", beat: 40, desc: "Gamma · intense focus" },
     ];
 
     const MODES = [
       {
         id: "binaural",
         label: "Binaural",
-        hint: "Different tones in each ear. Headphones required.",
-      },
-      {
-        id: "isochronic",
-        label: "Isochronic",
-        hint: "A single pulsed tone. Works on speakers.",
+        hint: "Classic: different tones in each ear. Headphones required.",
       },
       {
         id: "ambient",
         label: "Ambient",
-        hint: "Binaural tones over a soft noise bed. Headphones recommended.",
+        hint: "Same binaural pair, padded with soft noise. Headphones recommended.",
+      },
+      {
+        id: "isochronic",
+        label: "Isochronic",
+        hint: "Not binaural — a single tone pulsed at the same Hz. Speakers OK.",
       },
     ];
 
-    const CARRIER = 200; // lower carrier = less piercing than 400 Hz
-    const FADE = 0.55;
+    // Lower carrier = warmer / less piercing than the common 400 Hz demos
+    const CARRIER = 160;
+    const FADE = 0.7;
 
     class AttuneEngine {
       constructor() {
         this.ctx = null;
         this.master = null;
         this.filter = null;
+        this.warmth = null;
         this.nodes = [];
-        this.volume = 0.25;
+        this.volume = 0.22;
+        this.softness = 0.65;
         this.playing = false;
         this.presetId = null;
         this.modeId = "binaural";
+        this.noiseGainNode = null;
       }
 
       async ensureContext() {
         if (!this.ctx) {
           const Ctx = window.AudioContext || window.webkitAudioContext;
           this.ctx = new Ctx();
+
           this.master = this.ctx.createGain();
           this.master.gain.value = 0;
+
+          // Warmth shelf + low-pass muffling chain
+          this.warmth = this.ctx.createBiquadFilter();
+          this.warmth.type = "lowshelf";
+          this.warmth.frequency.value = 280;
+          this.warmth.gain.value = 3.5;
+
           this.filter = this.ctx.createBiquadFilter();
           this.filter.type = "lowpass";
-          this.filter.frequency.value = 1800;
-          this.filter.Q.value = 0.7;
+          this.filter.Q.value = 0.55;
+          this.#applySoftnessToFilters();
+
+          this.warmth.connect(this.filter);
           this.filter.connect(this.master);
           this.master.connect(this.ctx.destination);
         }
         if (this.ctx.state === "suspended") {
           await this.ctx.resume();
         }
+      }
+
+      #applySoftnessToFilters() {
+        if (!this.filter) return;
+        // Softness 0 → brighter (~1400 Hz); 1 → muffled (~520 Hz)
+        const cutoff = 1400 - this.softness * 880;
+        this.filter.frequency.setTargetAtTime(cutoff, this.ctx ? this.ctx.currentTime : 0, 0.05);
+        if (this.warmth) {
+          this.warmth.gain.setTargetAtTime(2 + this.softness * 4, this.ctx ? this.ctx.currentTime : 0, 0.05);
+        }
+        if (this.noiseGainNode) {
+          this.noiseGainNode.gain.setTargetAtTime(this.#noiseLevel(), this.ctx.currentTime, 0.05);
+        }
+      }
+
+      #noiseLevel() {
+        // Ambient always has more bed; binaural/isochronic get a whisper that scales with softness
+        if (this.modeId === "ambient") return 0.06 + this.softness * 0.16;
+        if (this.modeId === "isochronic") return this.softness * 0.05;
+        return this.softness * 0.09;
       }
 
       setVolume(pct) {
@@ -737,11 +762,17 @@
         }
       }
 
+      setSoftness(pct) {
+        this.softness = Math.max(0, Math.min(1, pct / 100));
+        this.#applySoftnessToFilters();
+      }
+
       stop({ immediate = false } = {}) {
         if (!this.ctx) {
           this.playing = false;
           this.presetId = null;
           this.nodes = [];
+          this.noiseGainNode = null;
           return;
         }
         const now = this.ctx.currentTime;
@@ -761,6 +792,7 @@
           } catch (_) { /* already stopped */ }
         }
         this.nodes = [];
+        this.noiseGainNode = null;
         this.playing = false;
         this.presetId = null;
       }
@@ -772,6 +804,7 @@
         this.modeId = modeId;
         this.presetId = preset.id;
         this.playing = true;
+        this.#applySoftnessToFilters();
 
         const beat = preset.beat;
         const now = this.ctx.currentTime;
@@ -779,7 +812,12 @@
         if (modeId === "isochronic") {
           this.#startIsochronic(beat, now);
         } else {
-          this.#startBinaural(beat, now, modeId === "ambient");
+          this.#startBinaural(beat, now);
+        }
+
+        // Soft bed under all modes when softness > 0 (stronger in ambient)
+        if (this.#noiseLevel() > 0.001) {
+          this.#startNoiseBed(now);
         }
 
         this.master.gain.cancelScheduledValues(now);
@@ -791,11 +829,12 @@
         this.nodes.push(...nodes);
       }
 
-      #startBinaural(beat, now, withNoise) {
+      #startBinaural(beat, now) {
         const left = this.ctx.createOscillator();
         const right = this.ctx.createOscillator();
-        left.type = "sine";
-        right.type = "sine";
+        // Triangle is a touch warmer than pure sine while staying gentle
+        left.type = "triangle";
+        right.type = "triangle";
         left.frequency.setValueAtTime(CARRIER, now);
         right.frequency.setValueAtTime(CARRIER + beat, now);
 
@@ -804,48 +843,54 @@
         panL.pan.setValueAtTime(-1, now);
         panR.pan.setValueAtTime(1, now);
 
-        const toneGain = this.ctx.createGain();
-        toneGain.gain.value = withNoise ? 0.55 : 0.7;
+        // Soften triangle harmonics with a per-channel gentle lowpass before merge
+        const toneFilter = this.ctx.createBiquadFilter();
+        toneFilter.type = "lowpass";
+        toneFilter.frequency.value = 700;
+        toneFilter.Q.value = 0.4;
 
-        left.connect(panL).connect(toneGain);
-        right.connect(panR).connect(toneGain);
-        toneGain.connect(this.filter);
+        const toneGain = this.ctx.createGain();
+        toneGain.gain.value = 0.42;
+
+        left.connect(panL).connect(toneFilter);
+        right.connect(panR).connect(toneFilter);
+        toneFilter.connect(toneGain).connect(this.warmth);
 
         left.start(now);
         right.start(now);
-        this.#track(left, right, panL, panR, toneGain);
-
-        if (withNoise) {
-          this.#startNoiseBed(now);
-        }
+        this.#track(left, right, panL, panR, toneFilter, toneGain);
       }
 
       #startIsochronic(beat, now) {
         const osc = this.ctx.createOscillator();
-        osc.type = "sine";
+        osc.type = "triangle";
         osc.frequency.setValueAtTime(CARRIER + beat / 2, now);
 
         const pulse = this.ctx.createGain();
         pulse.gain.setValueAtTime(0, now);
 
-        // Soft square-ish envelope at beat Hz (duty ~40%, rounded edges)
+        // Softer, more rounded pulses
         const period = 1 / beat;
-        const attack = Math.min(0.012, period * 0.08);
-        const hold = period * 0.32;
-        const release = Math.min(0.04, period * 0.2);
+        const attack = Math.min(0.03, period * 0.18);
+        const hold = period * 0.28;
+        const release = Math.min(0.08, period * 0.28);
         let t = now;
-        const end = now + 3600; // schedule an hour; restart on preset change
+        const end = now + 3600;
         while (t < end) {
           pulse.gain.setValueAtTime(0, t);
-          pulse.gain.linearRampToValueAtTime(0.75, t + attack);
-          pulse.gain.setValueAtTime(0.75, t + attack + hold);
+          pulse.gain.linearRampToValueAtTime(0.55, t + attack);
+          pulse.gain.setValueAtTime(0.55, t + attack + hold);
           pulse.gain.linearRampToValueAtTime(0, t + attack + hold + release);
           t += period;
         }
 
-        osc.connect(pulse).connect(this.filter);
+        const toneFilter = this.ctx.createBiquadFilter();
+        toneFilter.type = "lowpass";
+        toneFilter.frequency.value = 650;
+
+        osc.connect(pulse).connect(toneFilter).connect(this.warmth);
         osc.start(now);
-        this.#track(osc, pulse);
+        this.#track(osc, pulse, toneFilter);
       }
 
       #startNoiseBed(now) {
@@ -856,7 +901,6 @@
           let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
           for (let i = 0; i < bufferSize; i++) {
             const white = Math.random() * 2 - 1;
-            // Paul Kellet pink-ish filter
             b0 = 0.99886 * b0 + white * 0.0555179;
             b1 = 0.99332 * b1 + white * 0.0750759;
             b2 = 0.96900 * b2 + white * 0.1538520;
@@ -874,12 +918,13 @@
 
         const noiseFilter = this.ctx.createBiquadFilter();
         noiseFilter.type = "lowpass";
-        noiseFilter.frequency.value = 900;
+        noiseFilter.frequency.value = 700 - this.softness * 250;
 
         const noiseGain = this.ctx.createGain();
-        noiseGain.gain.value = 0.12;
+        noiseGain.gain.value = this.#noiseLevel();
+        this.noiseGainNode = noiseGain;
 
-        noise.connect(noiseFilter).connect(noiseGain).connect(this.filter);
+        noise.connect(noiseFilter).connect(noiseGain).connect(this.warmth);
         noise.start(now);
         this.#track(noise, noiseFilter, noiseGain);
       }
@@ -896,6 +941,8 @@
       pulse: document.getElementById("pulse-dot"),
       volume: document.getElementById("volume"),
       volumeOut: document.getElementById("volume-out"),
+      softness: document.getElementById("softness"),
+      softnessOut: document.getElementById("softness-out"),
       stop: document.getElementById("btn-stop"),
       tabListen: document.getElementById("tab-listen"),
       tabAbout: document.getElementById("tab-about"),
@@ -947,7 +994,11 @@
         els.stop.disabled = true;
       } else {
         els.statusValue.textContent = preset.name;
-        els.statusMeta.textContent = `${preset.beat} Hz · ${mode.label} · ${CARRIER} / ${CARRIER + preset.beat} Hz`;
+        const carriers =
+          activeMode === "isochronic"
+            ? `pulsed ${CARRIER + Math.round(preset.beat / 2)} Hz`
+            : `${CARRIER} / ${CARRIER + preset.beat} Hz`;
+        els.statusMeta.textContent = `${preset.beat} Hz · ${mode.label} · ${carriers}`;
         els.pulse.classList.add("live");
         els.stop.disabled = false;
       }
@@ -971,6 +1022,7 @@
 
     function showView(which) {
       const listen = which === "listen";
+      document.body.classList.toggle("view-about", !listen);
       els.viewListen.classList.toggle("active", listen);
       els.viewAbout.classList.toggle("active", !listen);
       els.viewListen.hidden = !listen;
@@ -986,6 +1038,13 @@
       engine.setVolume(v);
     });
 
+    els.softness.addEventListener("input", () => {
+      const v = Number(els.softness.value);
+      els.softnessOut.textContent = `${v}%`;
+      els.softness.setAttribute("aria-valuenow", String(v));
+      engine.setSoftness(v);
+    });
+
     els.stop.addEventListener("click", () => {
       engine.stop();
       updateStatus();
@@ -993,12 +1052,6 @@
 
     els.tabListen.addEventListener("click", () => showView("listen"));
     els.tabAbout.addEventListener("click", () => showView("about"));
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && engine.ctx && engine.ctx.state === "running") {
-        // keep playing in background tabs; browsers may suspend anyway
-      }
-    });
 
     renderPresets();
     renderModes();
