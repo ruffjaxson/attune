@@ -1,6 +1,7 @@
 {
   "name": "attune",
   "compatibility_date": "2026-07-09",
+  // Serve the single-page Attune app from the repo root
   "assets": {
     "directory": "./"
   }
