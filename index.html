@@ -344,97 +344,6 @@
       cursor: pointer;
     }
 
-    .toggles {
-      display: grid;
-      gap: 0.55rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      padding: 0.65rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--bg);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .toggle:hover {
-      border-color: rgba(255, 255, 255, 0.14);
-    }
-
-    .toggle-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-      min-width: 0;
-    }
-
-    .toggle-title {
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .toggle-desc {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .switch {
-      position: relative;
-      width: 40px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-
-    .switch-track {
-      position: absolute;
-      inset: 0;
-      border-radius: 999px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-
-    .switch-track::after {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--text-muted);
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-
-    .switch input:checked + .switch-track {
-      background: var(--accent-soft);
-      border-color: rgba(122, 158, 142, 0.45);
-    }
-
-    .switch input:checked + .switch-track::after {
-      transform: translateX(18px);
-      background: var(--accent);
-    }
-
-    .switch input:focus-visible + .switch-track {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
     .btn-stop {
       appearance: none;
       width: 100%;
@@ -622,28 +531,15 @@
                   <output id="softness-out" for="softness">65%</output>
                 </div>
 
-                <p class="section-label" style="margin-top:0.35rem">Ease</p>
-                <div class="toggles">
-                  <label class="toggle" for="masking">
-                    <span class="toggle-copy">
-                      <span class="toggle-title">Masking</span>
-                      <span class="toggle-desc">Soft noise texture under the tones</span>
-                    </span>
-                    <span class="switch">
-                      <input type="checkbox" id="masking">
-                      <span class="switch-track" aria-hidden="true"></span>
-                    </span>
-                  </label>
-                  <label class="toggle" for="motion">
-                    <span class="toggle-copy">
-                      <span class="toggle-title">Motion</span>
-                      <span class="toggle-desc">Slow swell so the drone breathes</span>
-                    </span>
-                    <span class="switch">
-                      <input type="checkbox" id="motion">
-                      <span class="switch-track" aria-hidden="true"></span>
-                    </span>
-                  </label>
+                <div class="volume-row">
+                  <label for="masking">Masking</label>
+                  <input type="range" id="masking" min="0" max="100" value="55" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55">
+                  <output id="masking-out" for="masking">55%</output>
+                </div>
+                <div class="volume-row">
+                  <label for="motion">Motion</label>
+                  <input type="range" id="motion" min="0" max="100" value="35" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35">
+                  <output id="motion-out" for="motion">35%</output>
                 </div>
 
                 <button type="button" class="btn-stop" id="btn-stop" disabled>Stop</button>
@@ -749,10 +645,10 @@
             <h3>Why Attune softens the sound</h3>
             <p>
               Raw tones can feel harsh and “electronic.” Attune uses a lower carrier, fades in/out,
-              and a Softness control that muffles the highs. Optional <strong>Masking</strong> adds a
-              soft brown-noise texture under the beat so it feels less like a lab tone. Optional
-              <strong>Motion</strong> adds a slow volume swell (about 15 seconds per breath) so the
-              sound doesn’t sit as a static drone. Neither changes the target beat frequency.
+              and a Softness control that muffles the highs. <strong>Masking</strong> blends in a
+              brown-noise texture under the beat — turn it up to bury the lab-tone feel.
+              <strong>Motion</strong> adds a slow volume swell (about 15 seconds per breath); higher
+              values breathe more deeply. Neither changes the target beat frequency.
             </p>
           </section>
 
@@ -796,7 +692,7 @@
       {
         id: "ambient",
         label: "Ambient",
-        hint: "Same binaural pair. Pair with Masking for a noise bed. Headphones recommended.",
+        hint: "Same binaural pair. Use Masking to add a noise bed. Headphones recommended.",
       },
       {
         id: "isochronic",
@@ -809,7 +705,7 @@
     const CARRIER = 160;
     const FADE = 0.7;
     const MOTION_PERIOD = 15; // seconds per full swell cycle
-    const MOTION_DEPTH = 0.28; // how far below peak the swell dips
+    const MOTION_DEPTH_MAX = 0.72; // max swell depth at Motion 100%
 
     class AttuneEngine {
       constructor() {
@@ -821,8 +717,8 @@
         this.nodes = [];
         this.volume = 0.22;
         this.softness = 0.65;
-        this.masking = false;
-        this.motion = false;
+        this.masking = 0.55;
+        this.motion = 0.35;
         this.playing = false;
         this.presetId = null;
         this.modeId = "binaural";
@@ -879,11 +775,18 @@
       }
 
       #noiseLevel() {
-        if (!this.masking) return 0;
-        // Ambient mode already implies a denser bed; other modes get a lighter veil
-        if (this.modeId === "ambient") return 0.1 + this.softness * 0.14;
-        if (this.modeId === "isochronic") return 0.05 + this.softness * 0.07;
-        return 0.07 + this.softness * 0.1;
+        if (this.masking <= 0.001) return 0;
+        // Curve upward so high settings really bury the tone
+        const amount = this.masking * this.masking;
+        const base =
+          this.modeId === "ambient" ? 0.28 :
+          this.modeId === "isochronic" ? 0.2 :
+          0.24;
+        return this.masking * base + amount * 0.42;
+      }
+
+      #motionDepth() {
+        return this.motion * MOTION_DEPTH_MAX;
       }
 
       setVolume(pct) {
@@ -898,53 +801,66 @@
         this.#applySoftnessToFilters();
       }
 
-      setMasking(on) {
-        this.masking = !!on;
+      setMasking(pct) {
+        this.masking = Math.max(0, Math.min(1, pct / 100));
         if (!this.playing) return;
-        if (this.masking && !this.noiseGainNode) {
+        if (this.masking > 0.001 && !this.noiseGainNode) {
           this.#startNoiseBed(this.ctx.currentTime);
-        } else if (!this.masking && this.noiseGainNode) {
+        } else if (this.masking <= 0.001 && this.noiseGainNode) {
           this.#stopNoiseBed();
         } else if (this.noiseGainNode) {
           this.noiseGainNode.gain.setTargetAtTime(this.#noiseLevel(), this.ctx.currentTime, 0.05);
         }
       }
 
-      setMotion(on) {
-        this.motion = !!on;
+      setMotion(pct) {
+        this.motion = Math.max(0, Math.min(1, pct / 100));
         if (!this.playing || !this.motionGain) return;
-        if (this.motion) {
-          this.#startMotion(this.ctx.currentTime);
+        if (this.motion > 0.001) {
+          if (this.motionLfo) {
+            this.#updateMotionDepth();
+          } else {
+            this.#startMotion(this.ctx.currentTime);
+          }
         } else {
           this.#stopMotion();
         }
       }
 
+      #updateMotionDepth() {
+        if (!this.motionOffset || !this.motionDepthGain || !this.ctx) return;
+        const depth = this.#motionDepth();
+        const now = this.ctx.currentTime;
+        this.motionOffset.offset.setTargetAtTime(1 - depth / 2, now, 0.08);
+        this.motionDepthGain.gain.setTargetAtTime(depth / 2, now, 0.08);
+      }
+
       #startMotion(now) {
         this.#stopMotion({ keepGain: true });
+        const depth = this.#motionDepth();
         // Constant-source offset + LFO depth → gain oscillates between (1-depth) and 1
         const offset = this.ctx.createConstantSource();
-        offset.offset.value = 1 - MOTION_DEPTH / 2;
+        offset.offset.value = 1 - depth / 2;
 
         const lfo = this.ctx.createOscillator();
         lfo.type = "sine";
         lfo.frequency.setValueAtTime(1 / MOTION_PERIOD, now);
 
-        const depth = this.ctx.createGain();
-        depth.gain.value = MOTION_DEPTH / 2;
+        const depthGain = this.ctx.createGain();
+        depthGain.gain.value = depth / 2;
 
         this.motionGain.gain.cancelScheduledValues(now);
-        this.motionGain.gain.setValueAtTime(1 - MOTION_DEPTH / 2, now);
+        this.motionGain.gain.setValueAtTime(1 - depth / 2, now);
 
         offset.connect(this.motionGain.gain);
-        lfo.connect(depth).connect(this.motionGain.gain);
+        lfo.connect(depthGain).connect(this.motionGain.gain);
         offset.start(now);
         lfo.start(now);
 
         this.motionOffset = offset;
         this.motionLfo = lfo;
-        this.motionDepthGain = depth;
-        this.#track(offset, lfo, depth);
+        this.motionDepthGain = depthGain;
+        this.#track(offset, lfo, depthGain);
       }
 
       #stopMotion({ keepGain = false } = {}) {
@@ -1032,10 +948,10 @@
           this.#startBinaural(beat, now);
         }
 
-        if (this.masking) {
+        if (this.masking > 0.001) {
           this.#startNoiseBed(now);
         }
-        if (this.motion) {
+        if (this.motion > 0.001) {
           this.#startMotion(now);
         }
 
@@ -1156,7 +1072,9 @@
       softness: document.getElementById("softness"),
       softnessOut: document.getElementById("softness-out"),
       masking: document.getElementById("masking"),
+      maskingOut: document.getElementById("masking-out"),
       motion: document.getElementById("motion"),
+      motionOut: document.getElementById("motion-out"),
       stop: document.getElementById("btn-stop"),
       tabListen: document.getElementById("tab-listen"),
       tabAbout: document.getElementById("tab-about"),
@@ -1213,10 +1131,10 @@
             ? `pulsed ${CARRIER + Math.round(preset.beat / 2)} Hz`
             : `${CARRIER} / ${CARRIER + preset.beat} Hz`;
         const extras = [
-          engine.masking ? "masking" : null,
-          engine.motion ? "motion" : null,
+          engine.masking > 0.001 ? `mask ${Math.round(engine.masking * 100)}%` : null,
+          engine.motion > 0.001 ? `motion ${Math.round(engine.motion * 100)}%` : null,
         ].filter(Boolean);
-        const extraText = extras.length ? ` · ${extras.join(" + ")}` : "";
+        const extraText = extras.length ? ` · ${extras.join(" · ")}` : "";
         els.statusMeta.textContent = `${preset.beat} Hz · ${mode.label} · ${carriers}${extraText}`;
         els.pulse.classList.add("live");
         els.stop.disabled = false;
@@ -1250,29 +1168,20 @@
       els.tabAbout.setAttribute("aria-selected", listen ? "false" : "true");
     }
 
-    els.volume.addEventListener("input", () => {
-      const v = Number(els.volume.value);
-      els.volumeOut.textContent = `${v}%`;
-      els.volume.setAttribute("aria-valuenow", String(v));
-      engine.setVolume(v);
-    });
+    function bindPercentSlider(input, output, setter) {
+      input.addEventListener("input", () => {
+        const v = Number(input.value);
+        output.textContent = `${v}%`;
+        input.setAttribute("aria-valuenow", String(v));
+        setter(v);
+        updateStatus();
+      });
+    }
 
-    els.softness.addEventListener("input", () => {
-      const v = Number(els.softness.value);
-      els.softnessOut.textContent = `${v}%`;
-      els.softness.setAttribute("aria-valuenow", String(v));
-      engine.setSoftness(v);
-    });
-
-    els.masking.addEventListener("change", () => {
-      engine.setMasking(els.masking.checked);
-      updateStatus();
-    });
-
-    els.motion.addEventListener("change", () => {
-      engine.setMotion(els.motion.checked);
-      updateStatus();
-    });
+    bindPercentSlider(els.volume, els.volumeOut, (v) => engine.setVolume(v));
+    bindPercentSlider(els.softness, els.softnessOut, (v) => engine.setSoftness(v));
+    bindPercentSlider(els.masking, els.maskingOut, (v) => engine.setMasking(v));
+    bindPercentSlider(els.motion, els.motionOut, (v) => engine.setMotion(v));
 
     els.stop.addEventListener("click", () => {
       engine.stop();
