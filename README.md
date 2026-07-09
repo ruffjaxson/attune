@@ -26,7 +26,16 @@ npx serve .
 
 ## Deploy
 
-Hosted on **Cloudflare Pages** from this repo’s `main` branch (static site, no build step). Custom domain: `focus.jaxsonruff.com`.
+Hosted on **Cloudflare Workers** (static assets) from this repo’s `main` branch.
+
+- Build command: leave empty / `exit 0`
+- Deploy command: `npx wrangler deploy`
+- Custom domain: `attune.jaxsonruff.com`
+
+```bash
+npm install
+npm run deploy
+```
 
 ## License
 

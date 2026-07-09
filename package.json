@@ -1,0 +1,12 @@
+{
+  "name": "attune",
+  "private": true,
+  "description": "Calm binaural and isochronic tones for focus and rest",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.109.0"
+  }
+}
