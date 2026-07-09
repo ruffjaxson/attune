@@ -5,7 +5,6 @@ node_modules
 .gitignore
 .assetsignore
 *.md
-LICENSE
 package.json
 package-lock.json
 wrangler.jsonc
