@@ -36,7 +36,3 @@ Hosted on **Cloudflare Workers** (static assets) from this repo’s `main` branc
 npm install
 npm run deploy
 ```
-
-## License
-
-MIT
